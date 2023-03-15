@@ -1,0 +1,48 @@
+:root {
+    --bg: #0d0f13;
+    --bg1: #0c0e15;
+    --bg2: #1b2130;
+    --bg3: #364763;
+    --text: #9eaed0;
+    --disable: #55627a;
+    --hover: #2c8af6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg);
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+#fondo {
+    background-image: url(./img/back.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 600px;
+    height: 600px;
+    border: 5px var(--bg2) solid;
+}
+
+#pacman {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url(./img/boss0.png);
+    width: 20px;
+    height: 20px;
+    position: absolute;
+}
+
+#enemigo {
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+}

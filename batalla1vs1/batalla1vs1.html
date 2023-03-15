@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batalla 1 vs 1</title>
+    <link rel="stylesheet" href="./batalla1vs1.css">
+</head>
+
+<body onload="comenzarJuego()">
+    <main>
+        <h1>Batalla 1 vs 1</h1>
+        <section id="coliseo">
+            <div id="vida">
+                <div id="stats1">
+                    <div id="iconoHP1"></div>
+                    <p id="vidapj1" class="stats1">?</p>
+                    <div id="iconoDMG1"></div>
+                    <p id="dañopj1" class="stats1">?</p>
+                </div>
+                <div id="stats2">
+                    <p id="dañopj2" class="stats2">?</p>
+                    <div id="iconoDMG2"></div>
+                    <p id="vidapj2" class="stats2">?</p>
+                    <div id="iconoHP2"></div>
+                </div>
+            </div>
+            <div id="cambiarPJ">
+                <button type="button" class="botonPJ" id="btnElegir">PERSONAJE</button>
+            </div>
+            <div id="pj1"></div>
+            <div id="bot"></div>
+            <div id="acciones">
+                <p id="accionPJ1" class="textoAccion"></p>
+                <p id="accionPJ2" class="textoAccion"></p>
+            </div>
+            <div id="final">
+                <div id="victoria">¡VICTORIA!</div>
+                <div id="derrota">¡DERROTA!</div>
+            </div>
+                <div id="comenzar">
+                    <button class="btnComenzar">Comenzar combate</button>
+                </div>
+                <div id="habilidades">
+                    <button id="atacar" class="btnHabilidad btnAtc">Atacar</button>
+                    <button id="defender" class="btnHabilidad btnDef">Defender</button>
+                    <button id="meditar" class="btnHabilidad btnMed">Meditar</button>
+                </div>
+        </section>
+        <section id="coliseoElegir">
+            <div id="elegirPJ">
+                <div class="icono">
+                    <div id="iconCaballero" class="iconoPJ"></div>
+                    <button type="button" class="botonPJ" id="btnCaballero">ELEGIR</button>
+                </div>
+                <div class="icono">
+                    <div id="iconIslamico" class="iconoPJ"></div>
+                    <button type="button" class="botonPJ" id="btnIslamico">ELEGIR</button>
+                </div>
+                <div class="icono">
+                    <div id="iconZombie" class="iconoPJ"></div>
+                    <button type="button" class="botonPJ" id="btnZombie">ELEGIR</button>
+                </div>
+                <div class="icono">
+                    <div id="iconEsqueleto" class="iconoPJ"></div>
+                    <button type="button" class="botonPJ" id="btnEsqueleto">ELEGIR</button>
+                </div>
+            </div>
+        </section>
+        <div id="usos">
+            <button id="refresh" class="boton">Reiniciar</button>
+            <a href="../../index.html" id="back">Vuelta al index</a>
+        </div>
+    </main>
+
+    <script src="./batalla1vs1.js"></script>
+</body>
+
+</html>

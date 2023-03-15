@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./adivLetra.css">
+</head>
+<body onload="comenzarJuego()">
+    <main>
+        <h1>Adivina la Letra!</h1>
+        <div id="acertar">
+            <p id="letraAcertar"></p>
+            <p id="incognita" class="text">¿?¿?</p>
+        </div>
+        <div id="cont-vidas">
+            <p id="vidas"></p>
+        </div>
+        <div id="input">
+            <input type="text" name="texto" value="" id="texto">
+            <p id="error"></p>
+        </div>
+        <div id="boton">
+            <button id="clonar" class="boton" disabled>Adivinar</button>
+            <button id="refresh" class="boton">Reiniciar</button>
+            <a href="../../index.html" id="back">Vuelta al index</a>
+        </div>
+        <p class="text">Último intento:</p>
+        <div class="contenido">
+            <p class="letra"></p>
+        </div>
+        <p class="text">Historial:</p>
+        <div id="intentos">
+            
+        </div>
+        
+    </main>
+    <script src="./adivLetra.js"></script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root{
+    --bg: #17171d;
+    --bg2: #25252e;
+    --blue: #1961b4;
+    --fblue: #0e3868;
+    --white:  #fff;
+    --orange: #e67812;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg);
+}
+
+main {
+    margin: 50px;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+}
+
+#cont-vidas {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+#input {
+    text-align: center;
+    margin-top: 20px;
+ }
+
+#texto {
+    height: 40px;
+    width: 30%;
+    font-size: 20px;
+    text-align: center;
+}
+
+.text {
+    color: white;
+    font-size: 30px;
+    text-align: center;
+}
+
+#boton {
+   text-align: center;
+   margin-bottom: 20px;
+   margin-top: 20px;
+}
+
+.boton {
+    height: 40px;
+    width: 100px;
+    font-size: 15px;
+}
+
+.contenido {
+    background-color: #25252e;
+    border: 2px #3d3d4d solid;
+    margin: 5px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.letra {
+    font-size: 50px;
+    color: #fff;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#error {
+    color: orange;
+}
+
+#acertar {
+    background-color: #25252e;
+    border: 2px #3d3d4d solid;
+    margin: 5px;
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+#letraAcertar {
+    font-size: 150px;
+    color: #fff;
+    padding: 20px 30px;
+    display: none;
+}
+
+#intentos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#back {
+    background-color: var(--blue);
+    padding: 10px 20px;
+    color: white;
+    text-decoration: none;
+}
+
+#back:hover {
+    background-color: var(--fblue);
+}

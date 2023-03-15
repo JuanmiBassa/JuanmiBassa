@@ -1,0 +1,44 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Verdana, Tahoma, sans-serif;
+    font-weight: 700;
+}
+
+:root {
+    --bg: #17171d;
+    --bg2: #35353e;
+    --blue: #1961b4;
+    --fblue: #0e3868;
+    --white: #fff;
+    --orange: #e67812;
+    --gradient1: #5eade2fe;
+    --gradient2: #4c75ce;
+}
+
+body {
+    background-color: var(--bg);
+}
+
+h1 {
+    color: white;
+    text-align: center;
+}
+
+
+.cell {
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    display: inline-block;
+}
+
+.player {
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    position: absolute;
+    margin-top: 0;
+    margin-left: 0;
+    transition: top 0.2s, left 0.2s;
+}
