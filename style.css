@@ -1,52 +1,77 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Verdana, Tahoma, sans-serif;
+    font-weight: 600;
+}
+
 :root{
-    --background: #1b1b1b;
+    --bg: #14181c;
+    --bg2: #1c222e;
     --blue: #1961b4;
     --fblue: #0e3868;
     --white:  #fff;
     --orange: #e67812;
-}
-
-* {
-    font-family: Verdana, Tahoma, sans-serif;
+    --gradient1: #5eade2fe;
+    --gradient2: #4c75ce;
 }
 
 body {
-    background-color: var(--background);
+    background-color: var(--bg);
 }
 
-h1 {
-    color: var(--blue);
+main {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+section {
+    margin-bottom: 30px;
+}
+
+h2 {
+    color: var(--orange);
     text-align: center;
-    
 }
 
-#subtitle {
+.subtitle {
     color: var(--white);
     text-align: center;
 }
 
-#contIndex {
-    margin: 0 auto;
-    width: 100%;
+#juegos {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: -10px;
+    flex-wrap: wrap;
 }
 
-#index {
-    color: var(--orange);
+.contJuegos {
+    width: 192px;
+    height: 108px;
+    margin: 20px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 5px var(--bg2) solid;
+    border-radius: 5px;
 }
 
-.exercise {
-    margin: 0 auto;
+.contJuegos:hover {
+    box-shadow: 0px 0px 5px 3px var(--blue);
 }
 
-.link {
-    color: var(--white);
-    text-decoration: none;
+.divJuego {
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-.link:hover {
-    color: var(--orange)
+#adivinaLetra {
+    background-image: url(./img/adivinaLetra.png);
+}
+
+#coliseo1v1 {
+    background-image: url(./img/coliseo.png);
 }
