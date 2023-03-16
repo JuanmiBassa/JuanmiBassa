@@ -8,6 +8,7 @@
 :root {
     --bg: #17171d;
     --bg2: #35353e;
+    --bgMazmorra: #31231a;
     --blue: #1961b4;
     --fblue: #0e3868;
     --white: #fff;
@@ -23,13 +24,14 @@ body {
 h1 {
     color: white;
     text-align: center;
+    margin-top: 20px;
 }
 
 main {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 500px;
+    flex-direction: column;
 }
 
 .cell {
@@ -38,5 +40,33 @@ main {
     display: inline-block;
     background-size: cover;
     background-repeat: no-repeat;
-    margin-top: -3px;
+    margin-top: -4px;
+    background-color: var(--bgMazmorra);
+}
+
+#stats {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    color: white;
+    font-size: 20px;
+}
+
+#coins {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    color: white;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+/* IMAGENES */
+#llave {
+    background-image: url(./img/llave.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: none;
+    width: 20px;
+    height: 20px;
 }
