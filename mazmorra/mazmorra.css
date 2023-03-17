@@ -42,7 +42,6 @@ main {
     background-repeat: no-repeat;
     margin-top: -4px;
     background-color: var(--bgMazmorra);
-    transform: rotateY(180deg);
 }
 
 #stats {
@@ -117,7 +116,7 @@ main {
 }
 
 .imgVida {
-    background-image: url(./img/curar.png);
+    background-image: url(./img/vida.png);
     background-repeat: no-repeat;
     background-size: cover;
     width: 30px;
