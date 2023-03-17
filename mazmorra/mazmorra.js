@@ -12,6 +12,7 @@ var posYenemigo;
 var posXenemigo;
 var numPunts = 0;
 var vidas = 3;
+var direccion = '';
 
 var tieneLlave = false;
 var tieneCuracion = false;
@@ -63,7 +64,16 @@ function recorrerMapa() {
                 posY = i;
                 posX = j;
                 const celdaNum = document.getElementsByClassName("cell");
-                celdaNum[count].style.backgroundImage = 'url(./img/pj.png)';
+                if (direccion == 'w') {
+                    celdaNum[count].style.backgroundImage = 'url(./img/pjEspalda.png)';
+                    celdaNum[count].style.transform = 'rotateY(0deg)';
+                } else if (direccion == 'a') {
+                    celdaNum[count].style.backgroundImage = 'url(./img/pj.png)';
+                    celdaNum[count].style.transform = 'rotateY(180deg)';
+                } else {
+                    celdaNum[count].style.backgroundImage = 'url(./img/pj.png)';
+                    celdaNum[count].style.transform = 'rotateY(0deg)';
+                }
             } else if (map[i][j] == 0) {
                 const celdaNum = document.getElementsByClassName("cell");
                 celdaNum[count].style.backgroundImage = '';
@@ -94,7 +104,6 @@ function recorrerMapa() {
     }
 }
 
-var direccion = '';
 document.addEventListener('keydown', (event) => {
     var keyValue = event.key;
     if (keyValue == 'W' || keyValue == 'w' || keyValue == 'ArrowUp') {

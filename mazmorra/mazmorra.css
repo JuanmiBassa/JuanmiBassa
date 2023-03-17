@@ -40,8 +40,9 @@ main {
     display: inline-block;
     background-size: cover;
     background-repeat: no-repeat;
-    margin-top: -3px;
+    margin-top: -4px;
     background-color: var(--bgMazmorra);
+    transform: rotateY(180deg);
 }
 
 #stats {
