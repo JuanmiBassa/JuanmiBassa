@@ -1,39 +1,46 @@
 const mapElement = document.getElementById("map");
 const puntuacion = document.querySelector("#puntuacion");
+const vida = document.querySelector("#vida");
 
 // ITEMS
 const llave = document.querySelector("#llave");
-
-var numPunts = 0;
-function comenzarJuego() {
-    recorrerMapa();
-    puntuacion.innerHTML = `Coins: ${numPunts}`;
-}
-
-// 0 camino, 1 pared, 2 moneda, 3 llave, 4 enemigo, 5 pj,  9 escalera
-// [y][x]
-var map = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 0, 0, 0, 2, 1, 0, 0, 2, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1],
-    [1, 1, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 2, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 1],
-    [1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 2, 1, 1],
-    [1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 2, 0, 0, 1, 0, 1, 1],
-    [1, 1, 0, 0, 0, 2, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1],
-    [1, 1, 2, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 4, 9, 1, 1],
-    [1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 2, 0, 1, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1],
-    [1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1],
-    [1, 1, 3, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 2, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1],
-    [1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 2, 1, 0, 1, 1, 0, 0, 0, 1, 1],
-    [1, 1, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 1, 0, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-];
+const pocion = document.querySelector("#pocion");
 
 var posY;
 var posX;
 var posYenemigo;
 var posXenemigo;
+var numPunts = 0;
+var vidas = 3;
+
+var tieneLlave = false;
+var tieneCuracion = false;
+
+function comenzarJuego() {
+    recorrerMapa();
+    puntuacion.innerHTML = `Coins: ${numPunts}`;
+    vida.innerHTML = `Vidas: ${vidas}`;
+}
+
+// 0 camino, 1 pared, 2 moneda, 3 llave, 4 enemigo, 5 pj, 6 curacion, 9 escalera
+// [y][x]
+var map = [
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 2, 0, 1, 0, 0, 0, 1, 0, 2, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 2, 1],
+    [1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1],
+    [1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1],
+    [1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 2, 1],
+    [1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
+    [1, 0, 0, 0, 0, 2, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+    [1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 4, 9, 0, 1],
+    [1, 1, 2, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1],
+    [1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1],
+    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1],
+    [1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 2, 0, 1, 0, 0, 1, 0, 1, 0, 1, 2, 1, 0, 1, 1, 0, 0, 0, 0, 1],
+    [1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1],
+    [1, 3, 0, 0, 0, 1, 0, 2, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 2, 0, 1, 1, 6, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+];
 
 // Cargar mapa
 for (let i = 0; i < map.length; i++) {
@@ -55,25 +62,32 @@ function recorrerMapa() {
             if (map[i][j] == 5) {
                 posY = i;
                 posX = j;
-                const newPj = document.getElementsByClassName("cell");
-                newPj[count].style.backgroundImage = 'url(./img/pj.png)';
+                const celdaNum = document.getElementsByClassName("cell");
+                celdaNum[count].style.backgroundImage = 'url(./img/pj.png)';
             } else if (map[i][j] == 0) {
-                const newPj = document.getElementsByClassName("cell");
-                newPj[count].style.backgroundImage = '';
+                const celdaNum = document.getElementsByClassName("cell");
+                celdaNum[count].style.backgroundImage = '';
             } else if (map[i][j] == 2) {
-                const newPj = document.getElementsByClassName("cell");
-                newPj[count].style.backgroundImage = 'url(./img/moneda.png)';
+                const celdaNum = document.getElementsByClassName("cell");
+                celdaNum[count].style.backgroundImage = 'url(./img/moneda.png)';
             } else if (map[i][j] == 3) {
-                const newPj = document.getElementsByClassName("cell");
-                newPj[count].style.backgroundImage = 'url(./img/llave.png)';
+                const celdaNum = document.getElementsByClassName("cell");
+                celdaNum[count].style.backgroundImage = 'url(./img/llave.png)';
             } else if (map[i][j] == 4) {
                 posYenemigo = i;
                 posXenemigo = j;
-                const newPj = document.getElementsByClassName("cell");
-                newPj[count].style.backgroundImage = 'url(./img/boss0.png)';
+                const celdaNum = document.getElementsByClassName("cell");
+                celdaNum[count].style.backgroundImage = 'url(./img/ogro.png)';
+            } else if (map[i][j] == 6) {
+                const celdaNum = document.getElementsByClassName("cell");
+                celdaNum[count].style.backgroundImage = 'url(./img/curar.png)';
             } else if (map[i][j] == 9) {
-                const newPj = document.getElementsByClassName("cell");
-                newPj[count].style.backgroundImage = 'url(./img/escAbierta.png)';
+                const celdaNum = document.getElementsByClassName("cell");
+                if (tieneLlave == true) {
+                    celdaNum[count].style.backgroundImage = 'url(./img/escAbierta.png)';
+                } else {
+                    celdaNum[count].style.backgroundImage = 'url(./img/escCerrada.png)';
+                }
             }
             count++;
         }
@@ -117,9 +131,12 @@ function moverCelda(oper, next1, next2) {
             if (map[posY + next1][posX + next2] == 2) {
                 numPunts += 10;
                 puntuacion.innerHTML = `Coins: ${numPunts}`;
-            }
-            if (map[posY + next1][posX + next2] == 3) {
+            } else if (map[posY + next1][posX + next2] == 3) {
                 llave.style.display = "block";
+                tieneLlave = true;
+            } else if (map[posY + next1][posX + next2] == 6) {
+                pocion.style.display = "block";
+                tieneCuracion = true;
             }
             map[posY][posX] = 0;
             map[posY + next1][posX + next2] = 5;
@@ -130,9 +147,12 @@ function moverCelda(oper, next1, next2) {
             if (map[posY - next1][posX - next2] == 2) {
                 numPunts += 10;
                 puntuacion.innerHTML = `Coins: ${numPunts}`;
-            }
-            if (map[posY - next1][posX - next2] == 3) {
+            } else if (map[posY - next1][posX - next2] == 3) {
                 llave.style.display = "block";
+                tieneLlave = true;
+            } else if (map[posY - next1][posX - next2] == 6) {
+                pocion.style.display = "block";
+                tieneCuracion = true;
             }
             map[posY][posX] = 0;
             map[posY - next1][posX - next2] = 5;
@@ -141,17 +161,21 @@ function moverCelda(oper, next1, next2) {
     }
 }
 
-
 // ENEMIGO
 function movimientoEnemigo() {
-    if (posY < posYenemigo && map[posYenemigo - 1][posXenemigo] == 0) {
-        moverCeldaEnemigo('-', 1, 0);
-    }else if (posX < posXenemigo && map[posYenemigo][posXenemigo - 1] == 0) {
-        moverCeldaEnemigo('-', 0, 1);
-    }else if (posY > posYenemigo && map[posYenemigo + 1][posXenemigo] == 0) {
-        moverCeldaEnemigo('+', 1, 0);
-    }else if (posX > posXenemigo && map[posYenemigo][posXenemigo + 1] == 0) {
-        moverCeldaEnemigo('+', 0, 1);
+    if (posX == posXenemigo && posY == posYenemigo) {
+        vidas -= vidas;
+        vida.innerHTML = `Vidas: ${vidas}`;
+    } else {
+        if (posY < posYenemigo && map[posYenemigo - 1][posXenemigo] == 0) {
+            moverCeldaEnemigo('-', 1, 0);
+        } else if (posX < posXenemigo && map[posYenemigo][posXenemigo - 1] == 0) {
+            moverCeldaEnemigo('-', 0, 1);
+        } else if (posY > posYenemigo && map[posYenemigo + 1][posXenemigo] == 0) {
+            moverCeldaEnemigo('+', 1, 0);
+        } else if (posX > posXenemigo && map[posYenemigo][posXenemigo + 1] == 0) {
+            moverCeldaEnemigo('+', 0, 1);
+        }
     }
 } setInterval(movimientoEnemigo, 400);
 

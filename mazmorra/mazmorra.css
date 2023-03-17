@@ -40,19 +40,20 @@ main {
     display: inline-block;
     background-size: cover;
     background-repeat: no-repeat;
-    margin-top: -4px;
+    margin-top: -3px;
     background-color: var(--bgMazmorra);
 }
 
 #stats {
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: space-between;
     color: white;
+    margin-bottom: 5px;
     font-size: 20px;
 }
 
-#coins {
+.stats {
     display: flex;
     align-items: center;
     justify-content: end;
@@ -61,12 +62,46 @@ main {
     font-size: 20px;
 }
 
+#items {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    color: white;
+    font-size: 25px;
+    margin-top: 5px;
+}
+
 /* IMAGENES */
+#imgCoin {
+    background-image: url(./img/moneda.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
+#imgVida {
+    background-image: url(./img/curar.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 30px;
+    height: 30px;
+}
+
 #llave {
     background-image: url(./img/llave.png);
     background-repeat: no-repeat;
     background-size: cover;
     display: none;
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
+}
+
+#pocion {
+    background-image: url(./img/curar.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: none;
+    width: 30px;
+    height: 30px;
 }
