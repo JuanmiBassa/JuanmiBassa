@@ -1,6 +1,7 @@
 const mapElement = document.getElementById("map");
 const puntuacion = document.querySelector("#puntuacion");
-const vida = document.querySelector("#vida");
+const statsVida = document.querySelector(".statsVida");
+const imgVida = document.querySelector(".imgVida");
 
 // ITEMS
 const llave = document.querySelector("#llave");
@@ -10,6 +11,7 @@ var posY;
 var posX;
 var posYenemigo;
 var posXenemigo;
+
 var numPunts = 0;
 var vidas = 3;
 var direccion = '';
@@ -19,8 +21,10 @@ var tieneCuracion = false;
 
 function comenzarJuego() {
     recorrerMapa();
+    for (let k = 0; k < vidas-1; k++) {
+        añadirVida();
+    }
     puntuacion.innerHTML = `Coins: ${numPunts}`;
-    vida.innerHTML = `Vidas: ${vidas}`;
 }
 
 // 0 camino, 1 pared, 2 moneda, 3 llave, 4 enemigo, 5 pj, 6 curacion, 9 escalera
@@ -102,6 +106,10 @@ function recorrerMapa() {
             count++;
         }
     }
+    if (posX == posXenemigo && posY == posYenemigo) {
+        vidas -= vidas;
+        eliminarVida();
+    }
 }
 
 document.addEventListener('keydown', (event) => {
@@ -144,8 +152,7 @@ function moverCelda(oper, next1, next2) {
                 llave.style.display = "block";
                 tieneLlave = true;
             } else if (map[posY + next1][posX + next2] == 6) {
-                pocion.style.display = "block";
-                tieneCuracion = true;
+                añadirVida();
             }
             map[posY][posX] = 0;
             map[posY + next1][posX + next2] = 5;
@@ -160,8 +167,7 @@ function moverCelda(oper, next1, next2) {
                 llave.style.display = "block";
                 tieneLlave = true;
             } else if (map[posY - next1][posX - next2] == 6) {
-                pocion.style.display = "block";
-                tieneCuracion = true;
+                añadirVida();
             }
             map[posY][posX] = 0;
             map[posY - next1][posX - next2] = 5;
@@ -170,21 +176,27 @@ function moverCelda(oper, next1, next2) {
     }
 }
 
+function añadirVida() {
+    const pintarVida = document.createElement('div');
+    pintarVida.classList.add('imgVida');
+    statsVida.appendChild(pintarVida);
+}
+
+function eliminarVida() {
+    const removeVida = document.querySelector('.imgVida');
+    removeVida.remove();
+}
+
 // ENEMIGO
 function movimientoEnemigo() {
-    if (posX == posXenemigo && posY == posYenemigo) {
-        vidas -= vidas;
-        vida.innerHTML = `Vidas: ${vidas}`;
-    } else {
-        if (posY < posYenemigo && map[posYenemigo - 1][posXenemigo] == 0) {
-            moverCeldaEnemigo('-', 1, 0);
-        } else if (posX < posXenemigo && map[posYenemigo][posXenemigo - 1] == 0) {
-            moverCeldaEnemigo('-', 0, 1);
-        } else if (posY > posYenemigo && map[posYenemigo + 1][posXenemigo] == 0) {
-            moverCeldaEnemigo('+', 1, 0);
-        } else if (posX > posXenemigo && map[posYenemigo][posXenemigo + 1] == 0) {
-            moverCeldaEnemigo('+', 0, 1);
-        }
+    if (posY < posYenemigo && map[posYenemigo - 1][posXenemigo] == 0) {
+        moverCeldaEnemigo('-', 1, 0);
+    } else if (posX < posXenemigo && map[posYenemigo][posXenemigo - 1] == 0) {
+        moverCeldaEnemigo('-', 0, 1);
+    } else if (posY > posYenemigo && map[posYenemigo + 1][posXenemigo] == 0) {
+        moverCeldaEnemigo('+', 1, 0);
+    } else if (posX > posXenemigo && map[posYenemigo][posXenemigo + 1] == 0) {
+        moverCeldaEnemigo('+', 0, 1);
     }
 } setInterval(movimientoEnemigo, 400);
 

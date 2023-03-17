@@ -54,7 +54,16 @@ main {
     font-size: 20px;
 }
 
-.stats {
+.statsVida {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    color: white;
+    margin-bottom: 5px;
+    font-size: 20px;
+}
+
+.statsCoin {
     display: flex;
     align-items: center;
     justify-content: end;
@@ -103,6 +112,14 @@ main {
     background-repeat: no-repeat;
     background-size: cover;
     display: none;
+    width: 30px;
+    height: 30px;
+}
+
+.imgVida {
+    background-image: url(./img/curar.png);
+    background-repeat: no-repeat;
+    background-size: cover;
     width: 30px;
     height: 30px;
 }
