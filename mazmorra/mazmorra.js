@@ -49,12 +49,6 @@ function comenzarJuego() {
     }
     puntuacion.innerHTML = `Coins: ${Jugador.numPunts}`;
     tituloNivel.innerHTML = `Mazmorra Level ${Escaleras.nivel}`;
-    Jugador.posInicialX = Jugador.X;
-    Jugador.posInicialY = Jugador.Y;
-    Ogro.posInicialX = Ogro.X;
-    Ogro.posInicialY = Ogro.Y;
-    Demonio.posInicialX = Demonio.X;
-    Demonio.posInicialY = Demonio.Y;
 }
 
 // 0 camino, 1 pared, 2 moneda, 3 llave, 4 Ogro, 5 pj, 6 curacion, 8 demonio, 9 escalera
@@ -66,14 +60,14 @@ var map = [
     [1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1],
     [1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 2, 1],
     [1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
-    [1, 8, 0, 0, 0, 2, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 2, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1],
     [1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 4, 9, 0, 1],
     [1, 1, 2, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1],
     [1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1],
     [1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 2, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1],
     [1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1],
-    [1, 3, 0, 0, 0, 1, 0, 2, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 2, 1, 1, 1, 2, 0, 1, 1, 6, 1],
+    [1, 3, 0, 0, 0, 1, 0, 2, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 2, 1, 1, 1, 2, 0, 1, 1, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ];
 
@@ -95,6 +89,12 @@ function recorrerMapa() {
     for (let i = 0; i < map.length; i++) {
         for (let j = 0; j < map[i].length; j++) {
             if (map[i][j] == 5) {
+                if (Jugador.X == 0 && Jugador.Y == 0) {
+                    Jugador.Y = i;
+                    Jugador.X = j;
+                    Jugador.posInicialX = Jugador.X;
+                    Jugador.posInicialY = Jugador.Y;
+                }
                 Jugador.Y = i;
                 Jugador.X = j;
                 const celdaNum = document.getElementsByClassName("cell");
@@ -118,6 +118,12 @@ function recorrerMapa() {
                 const celdaNum = document.getElementsByClassName("cell");
                 celdaNum[count].style.backgroundImage = 'url(./img/llave.png)';
             } else if (map[i][j] == 4) {
+                if (Ogro.X == 0 && Ogro.Y == 0) {
+                    Ogro.Y = i;
+                    Ogro.X = j;
+                    Ogro.posInicialX = Ogro.X;
+                    Ogro.posInicialY = Ogro.Y;
+                }
                 Ogro.Y = i;
                 Ogro.X = j;
                 const celdaNum = document.getElementsByClassName("cell");
@@ -126,6 +132,12 @@ function recorrerMapa() {
                 const celdaNum = document.getElementsByClassName("cell");
                 celdaNum[count].style.backgroundImage = 'url(./img/curar.png)';
             } else if (map[i][j] == 8) {
+                if (Demonio.X == 0 && Demonio.Y == 0) {
+                    Demonio.Y = i;
+                    Demonio.X = j;
+                    Demonio.posInicialX = Demonio.X;
+                    Demonio.posInicialY = Demonio.Y;
+                }
                 Demonio.Y = i;
                 Demonio.X = j;
                 const celdaNum = document.getElementsByClassName("cell");
@@ -156,7 +168,7 @@ document.addEventListener('keydown', (event) => {
     } else if (keyValue == 'D' || keyValue == 'd' || keyValue == 'ArrowRight') {
         Jugador.direccion = 'd';
     } else if (keyValue == 'Control') {
-        Jugador.direccion = 'pausa';
+        Jugador.direccion = 'Pausa';
     }
 });
 
@@ -174,6 +186,7 @@ function movimiento() {
         moverCelda('+', 0, 1);
     }
     reinicioVida(Ogro);
+    reinicioVida(Demonio);
 } setInterval(movimiento, 250);
 
 function moverCelda(oper, next1, next2) {
@@ -213,6 +226,8 @@ function moverCelda(oper, next1, next2) {
             if (map[Jugador.Y - next1][Jugador.X - next2] == 9) {
                 if (Jugador.tieneLlave == true) {
                     nivel2();
+                    Escaleras.nivel += 1;
+                    tituloNivel.innerHTML = `Mazmorra Level ${Escaleras.nivel}`;
                 }
             } else {
                 map[Jugador.Y][Jugador.X] = 0;
@@ -225,128 +240,132 @@ function moverCelda(oper, next1, next2) {
 
 function movimientoOgro() {
     if (Ogro.direccion == 'w') {
-        defaultMovimientoEnemigo(Ogro);
+        defaultMovimientoOgro(Ogro);
     } else if (Ogro.direccion == 'a') {
-        defaultMovimientoEnemigo(Ogro);
+        defaultMovimientoOgro(Ogro);
     } else if (Ogro.direccion == 's') {
-        defaultMovimientoEnemigo(Ogro);
+        defaultMovimientoOgro(Ogro);
     } else if (Ogro.direccion == 'd') {
-        defaultMovimientoEnemigo(Ogro);
+        defaultMovimientoOgro(Ogro);
     }
     reinicioVida(Ogro);
 } setInterval(movimientoOgro, 400);
 
 function movimientoDemonio() {
     if (Demonio.direccion == 'w') {
-        defaultMovimientoEnemigo2(Demonio);
+        defaultMovimientoDemonio(Demonio);
     } else if (Demonio.direccion == 'a') {
-        defaultMovimientoEnemigo2(Demonio);
+        defaultMovimientoDemonio(Demonio);
     } else if (Demonio.direccion == 's') {
-        defaultMovimientoEnemigo2(Demonio);
+        defaultMovimientoDemonio(Demonio);
     } else if (Demonio.direccion == 'd') {
-        defaultMovimientoEnemigo2(Demonio);
+        defaultMovimientoDemonio(Demonio);
     }
     reinicioVida(Demonio);
 } setInterval(movimientoDemonio, 300);
 
 // ENEMIGO
-function defaultMovimientoEnemigo(enemigo) {
-    if (enemigo.direccion == 'w') {
-        if (map[enemigo.Y - 1][enemigo.X] == 0 || map[enemigo.Y - 1][enemigo.X] == 5) {
-            moverCeldaEnemigo('-', 1, 0, enemigo, 4);
-        } else if (map[enemigo.Y][enemigo.X - 1] == 0 || map[enemigo.Y][enemigo.X - 1] == 5) {
-            enemigo.direccion = 'a';
-        } else if (map[enemigo.Y][enemigo.X + 1] == 0 || map[enemigo.Y][enemigo.X + 1] == 5) {
-            enemigo.direccion = 'd';
-        } else {
-            enemigo.direccion = 's';
-        }
-    } else if (enemigo.direccion == 'a') {
-        if (map[enemigo.Y][enemigo.X - 1] == 0 || map[enemigo.Y][enemigo.X - 1] == 5) {
-            moverCeldaEnemigo('-', 0, 1, enemigo, 4);
-        } else if (map[enemigo.Y - 1][enemigo.X] == 0 || map[enemigo.Y - 1][enemigo.X] == 5) {
-            enemigo.direccion = 'w';
-        } else if (map[enemigo.Y + 1][enemigo.X] == 0 || map[enemigo.Y + 1][enemigo.X] == 5) {
-            enemigo.direccion = 's';
-        } else {
-            enemigo.direccion = 'd';
-        }
-    } else if (enemigo.direccion == 's') {
-        if (map[enemigo.Y + 1][enemigo.X] == 0 || map[enemigo.Y + 1][enemigo.X] == 5) {
-            moverCeldaEnemigo('+', 1, 0, enemigo, 4);
-        } else if (map[enemigo.Y][enemigo.X - 1] == 0 || map[enemigo.Y][enemigo.X - 1] == 5) {
-            enemigo.direccion = 'a';
-        } else if (map[enemigo.Y][enemigo.X + 1] == 0 || map[enemigo.Y][enemigo.X + 1] == 5) {
-            enemigo.direccion = 'd';
-        } else {
-            enemigo.direccion = 'w';
-        }
-    } else if (enemigo.direccion == 'd') {
-        if (map[enemigo.Y][enemigo.X + 1] == 0 || map[enemigo.Y][enemigo.X + 1] == 5) {
-            moverCeldaEnemigo('+', 0, 1, enemigo, 4);
-        } else if (map[enemigo.Y - 1][enemigo.X] == 0 || map[enemigo.Y - 1][enemigo.X] == 5) {
-            enemigo.direccion = 'w';
-        } else if (map[enemigo.Y + 1][enemigo.X] == 0 || map[enemigo.Y + 1][enemigo.X] == 5) {
-            enemigo.direccion = 's';
-        } else {
-            enemigo.direccion = 'a';
+function defaultMovimientoOgro(enemigo) {
+    if (Ogro.X != 0 && Ogro.Y != 0) {
+        if (enemigo.direccion == 'w') {
+            if (map[enemigo.Y - 1][enemigo.X] == 0 || map[enemigo.Y - 1][enemigo.X] == 5) {
+                moverCeldaEnemigo('-', 1, 0, enemigo, 4);
+            } else if (map[enemigo.Y][enemigo.X - 1] == 0 || map[enemigo.Y][enemigo.X - 1] == 5) {
+                enemigo.direccion = 'a';
+            } else if (map[enemigo.Y][enemigo.X + 1] == 0 || map[enemigo.Y][enemigo.X + 1] == 5) {
+                enemigo.direccion = 'd';
+            } else {
+                enemigo.direccion = 's';
+            }
+        } else if (enemigo.direccion == 'a') {
+            if (map[enemigo.Y][enemigo.X - 1] == 0 || map[enemigo.Y][enemigo.X - 1] == 5) {
+                moverCeldaEnemigo('-', 0, 1, enemigo, 4);
+            } else if (map[enemigo.Y - 1][enemigo.X] == 0 || map[enemigo.Y - 1][enemigo.X] == 5) {
+                enemigo.direccion = 'w';
+            } else if (map[enemigo.Y + 1][enemigo.X] == 0 || map[enemigo.Y + 1][enemigo.X] == 5) {
+                enemigo.direccion = 's';
+            } else {
+                enemigo.direccion = 'd';
+            }
+        } else if (enemigo.direccion == 's') {
+            if (map[enemigo.Y + 1][enemigo.X] == 0 || map[enemigo.Y + 1][enemigo.X] == 5) {
+                moverCeldaEnemigo('+', 1, 0, enemigo, 4);
+            } else if (map[enemigo.Y][enemigo.X - 1] == 0 || map[enemigo.Y][enemigo.X - 1] == 5) {
+                enemigo.direccion = 'a';
+            } else if (map[enemigo.Y][enemigo.X + 1] == 0 || map[enemigo.Y][enemigo.X + 1] == 5) {
+                enemigo.direccion = 'd';
+            } else {
+                enemigo.direccion = 'w';
+            }
+        } else if (enemigo.direccion == 'd') {
+            if (map[enemigo.Y][enemigo.X + 1] == 0 || map[enemigo.Y][enemigo.X + 1] == 5) {
+                moverCeldaEnemigo('+', 0, 1, enemigo, 4);
+            } else if (map[enemigo.Y - 1][enemigo.X] == 0 || map[enemigo.Y - 1][enemigo.X] == 5) {
+                enemigo.direccion = 'w';
+            } else if (map[enemigo.Y + 1][enemigo.X] == 0 || map[enemigo.Y + 1][enemigo.X] == 5) {
+                enemigo.direccion = 's';
+            } else {
+                enemigo.direccion = 'a';
+            }
         }
     }
 }
 
-function defaultMovimientoEnemigo2(enemigo) {
-    if (enemigo.direccion == 'w') {
-        if (map[enemigo.Y - 1][enemigo.X] == 0 || map[enemigo.Y - 1][enemigo.X] == 5) {
-            moverCeldaEnemigo('-', 1, 0, enemigo, 8);
-        } else if (map[enemigo.Y][enemigo.X - 1] == 0 || map[enemigo.Y][enemigo.X - 1] == 5) {
-            enemigo.direccion = 'a';
-        } else if (map[enemigo.Y][enemigo.X + 1] == 0 || map[enemigo.Y][enemigo.X + 1] == 5) {
-            enemigo.direccion = 'd';
-        } else {
-            enemigo.direccion = 's';
-        }
-    } else if (enemigo.direccion == 'a') {
-        if (map[enemigo.Y][enemigo.X - 1] == 0 || map[enemigo.Y][enemigo.X - 1] == 5) {
-            moverCeldaEnemigo('-', 0, 1, enemigo, 8);
-        } else if (map[enemigo.Y - 1][enemigo.X] == 0 || map[enemigo.Y - 1][enemigo.X] == 5) {
-            enemigo.direccion = 'w';
-        } else if (map[enemigo.Y + 1][enemigo.X] == 0 || map[enemigo.Y + 1][enemigo.X] == 5) {
-            enemigo.direccion = 's';
-        } else {
-            enemigo.direccion = 'd';
-        }
-    } else if (enemigo.direccion == 's') {
-        if (map[enemigo.Y + 1][enemigo.X] == 0 || map[enemigo.Y + 1][enemigo.X] == 5) {
-            moverCeldaEnemigo('+', 1, 0, enemigo, 8);
-        } else if (map[enemigo.Y][enemigo.X - 1] == 0 || map[enemigo.Y][enemigo.X - 1] == 5) {
-            enemigo.direccion = 'a';
-        } else if (map[enemigo.Y][enemigo.X + 1] == 0 || map[enemigo.Y][enemigo.X + 1] == 5) {
-            enemigo.direccion = 'd';
-        } else {
-            enemigo.direccion = 'w';
-        }
-    } else if (enemigo.direccion == 'd') {
-        if (map[enemigo.Y][enemigo.X + 1] == 0 || map[enemigo.Y][enemigo.X + 1] == 5) {
-            moverCeldaEnemigo('+', 0, 1, enemigo, 8);
-        } else if (map[enemigo.Y - 1][enemigo.X] == 0 || map[enemigo.Y - 1][enemigo.X] == 5) {
-            enemigo.direccion = 'w';
-        } else if (map[enemigo.Y + 1][enemigo.X] == 0 || map[enemigo.Y + 1][enemigo.X] == 5) {
-            enemigo.direccion = 's';
-        } else {
-            enemigo.direccion = 'a';
+function defaultMovimientoDemonio(enemigo) {
+    if (Demonio.X != 0 && Demonio.Y != 0) {
+        if (enemigo.direccion == 'w') {
+            if (map[enemigo.Y - 1][enemigo.X] == 0 || map[enemigo.Y - 1][enemigo.X] == 5) {
+                moverCeldaEnemigo('-', 1, 0, enemigo, 8);
+            } else if (map[enemigo.Y][enemigo.X - 1] == 0 || map[enemigo.Y][enemigo.X - 1] == 5) {
+                enemigo.direccion = 'a';
+            } else if (map[enemigo.Y][enemigo.X + 1] == 0 || map[enemigo.Y][enemigo.X + 1] == 5) {
+                enemigo.direccion = 'd';
+            } else {
+                enemigo.direccion = 's';
+            }
+        } else if (enemigo.direccion == 'a') {
+            if (map[enemigo.Y][enemigo.X - 1] == 0 || map[enemigo.Y][enemigo.X - 1] == 5) {
+                moverCeldaEnemigo('-', 0, 1, enemigo, 8);
+            } else if (map[enemigo.Y - 1][enemigo.X] == 0 || map[enemigo.Y - 1][enemigo.X] == 5) {
+                enemigo.direccion = 'w';
+            } else if (map[enemigo.Y + 1][enemigo.X] == 0 || map[enemigo.Y + 1][enemigo.X] == 5) {
+                enemigo.direccion = 's';
+            } else {
+                enemigo.direccion = 'd';
+            }
+        } else if (enemigo.direccion == 's') {
+            if (map[enemigo.Y + 1][enemigo.X] == 0 || map[enemigo.Y + 1][enemigo.X] == 5) {
+                moverCeldaEnemigo('+', 1, 0, enemigo, 8);
+            } else if (map[enemigo.Y][enemigo.X - 1] == 0 || map[enemigo.Y][enemigo.X - 1] == 5) {
+                enemigo.direccion = 'a';
+            } else if (map[enemigo.Y][enemigo.X + 1] == 0 || map[enemigo.Y][enemigo.X + 1] == 5) {
+                enemigo.direccion = 'd';
+            } else {
+                enemigo.direccion = 'w';
+            }
+        } else if (enemigo.direccion == 'd') {
+            if (map[enemigo.Y][enemigo.X + 1] == 0 || map[enemigo.Y][enemigo.X + 1] == 5) {
+                moverCeldaEnemigo('+', 0, 1, enemigo, 8);
+            } else if (map[enemigo.Y - 1][enemigo.X] == 0 || map[enemigo.Y - 1][enemigo.X] == 5) {
+                enemigo.direccion = 'w';
+            } else if (map[enemigo.Y + 1][enemigo.X] == 0 || map[enemigo.Y + 1][enemigo.X] == 5) {
+                enemigo.direccion = 's';
+            } else {
+                enemigo.direccion = 'a';
+            }
         }
     }
 }
 
 function moverCeldaEnemigo(oper, next1, next2, enemigo, numEnemigo) {
     if (oper == '+') {
-            map[enemigo.Y][enemigo.X] = 0;
-            map[enemigo.Y + next1][enemigo.X + next2] = numEnemigo;
-            recorrerMapa();
+        map[enemigo.Y][enemigo.X] = 0;
+        map[enemigo.Y + next1][enemigo.X + next2] = numEnemigo;
+        recorrerMapa();
     } else {
-            map[enemigo.Y][enemigo.X] = 0;
-            map[enemigo.Y - next1][enemigo.X - next2] = numEnemigo;
-            recorrerMapa();
+        map[enemigo.Y][enemigo.X] = 0;
+        map[enemigo.Y - next1][enemigo.X - next2] = numEnemigo;
+        recorrerMapa();
     }
 }
 
@@ -361,17 +380,29 @@ function eliminarVida() {
     removeVida.remove();
 }
 
-function reinicioVida(enemigo, posEnemigo) {
+function reinicioVida(enemigo) {
     if (Jugador.X == enemigo.X && Jugador.Y == enemigo.Y) {
         map[Jugador.Y][Jugador.X] = 0;
-        map[enemigo.Y][enemigo.X] = 0;
+        Jugador.direccion = 'Pausa';
         Jugador.X = Jugador.posInicialX;
         Jugador.Y = Jugador.posInicialY;
         map[Jugador.Y][Jugador.X] = 5;
-        Jugador.direccion = 'Pausa';
-        enemigo.X = Ogro.posInicialX;
-        enemigo.Y = Ogro.posInicialY;
-        enemigo.direccion = 'w';
+
+        if (Ogro.X != 0 && Ogro.Y != 0) {
+            map[Ogro.Y][Ogro.X] = 0;
+            Ogro.X = Ogro.posInicialX;
+            Ogro.Y = Ogro.posInicialY;
+            Ogro.direccion = 'w';
+            map[Ogro.Y][Ogro.X] = 4;
+        }
+
+        if (Demonio.X != 0 && Demonio.Y != 0) {
+            map[Demonio.Y][Demonio.X] = 0;
+            Demonio.X = Demonio.posInicialX;
+            Demonio.Y = Demonio.posInicialY;
+            Demonio.direccion = 'w';
+            map[Demonio.Y][Demonio.X] = 8;
+        }
         eliminarVida();
     }
 }
@@ -379,23 +410,28 @@ function reinicioVida(enemigo, posEnemigo) {
 function nivel2() {
     const map2 = [
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 2, 0, 1, 0, 0, 0, 1, 0, 2, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 2, 1],
-        [1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1],
+        [1, 3, 1, 0, 0, 0, 0, 1, 0, 2, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 8, 1, 1, 0, 2, 1],
+        [1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1],
         [1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1],
         [1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 2, 1],
         [1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
         [1, 0, 0, 0, 0, 2, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1],
-        [1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 4, 9, 0, 1],
+        [1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 9, 0, 1],
         [1, 1, 2, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1],
         [1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1],
         [1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 2, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1],
         [1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 2, 1, 2, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1],
-        [1, 3, 0, 0, 0, 1, 0, 2, 1, 0, 0, 1, 2, 2, 2, 1, 0, 0, 0, 0, 1, 2, 1, 1, 1, 2, 0, 1, 1, 6, 1],
+        [1, 0, 0, 0, 0, 1, 0, 2, 1, 0, 4, 1, 2, 2, 2, 1, 0, 0, 0, 0, 1, 2, 1, 1, 1, 2, 0, 1, 1, 6, 1],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     ];
     Jugador.direccion = 'Pausa';
+    Ogro.Y = 0;
+    Ogro.X = 0;
     Ogro.direccion = 'w';
+    Demonio.Y = 0;
+    Demonio.X = 0;
+    Demonio.direccion = 'w';
     map = map2;
     recorrerMapa();
 }
