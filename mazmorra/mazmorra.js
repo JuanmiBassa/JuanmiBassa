@@ -8,6 +8,11 @@ const tituloNivel = document.querySelector("h1");
 const llave = document.querySelector("#llave");
 const pocion = document.querySelector("#pocion");
 
+const contenidoDerrota = document.querySelector("#contenidoDerrota");
+const refresh = document.querySelector("#refresh");
+refresh.addEventListener('click', () => {
+    location.reload();
+})
 
 var Jugador = {
     X: 0,
@@ -37,12 +42,24 @@ var Demonio = {
 };
 
 var Escaleras = {
-    X: 0,
-    Y: 0,
     nivel: 1,
 };
 
+// Cargar mapa
+var map;
 function comenzarJuego() {
+    mapasNiveles();
+    for (let i = 0; i < map.length; i++) {
+        for (let j = 0; j < map[i].length; j++) {
+            var cell = document.createElement("div");
+            cell.classList.add("cell");
+            mapElement.appendChild(cell);
+            if (map[i][j] == 1) {
+                cell.style.backgroundImage = 'url(./img/muro.png)';
+            }
+        }
+        mapElement.appendChild(document.createElement("br"));
+    }
     recorrerMapa();
     for (let k = 0; k < Jugador.vidas - 1; k++) {
         añadirVida();
@@ -51,53 +68,21 @@ function comenzarJuego() {
     tituloNivel.innerHTML = `Mazmorra Level ${Escaleras.nivel}`;
 }
 
-// 0 camino, 1 pared, 2 moneda, 3 llave, 4 Ogro, 5 pj, 6 curacion, 8 demonio, 9 escalera
-// ColumnaFila[y]RecorreFila[x]
-var map = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 2, 0, 1, 0, 0, 0, 1, 0, 2, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 2, 1],
-    [1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1],
-    [1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1],
-    [1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 2, 1],
-    [1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
-    [1, 0, 0, 0, 0, 2, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1],
-    [1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 4, 9, 0, 1],
-    [1, 1, 2, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1],
-    [1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1],
-    [1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 2, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1],
-    [1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1],
-    [1, 3, 0, 0, 0, 1, 0, 2, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 2, 1, 1, 1, 2, 0, 1, 1, 0, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-];
-
-// Cargar mapa
-for (let i = 0; i < map.length; i++) {
-    for (let j = 0; j < map[i].length; j++) {
-        var cell = document.createElement("div");
-        cell.classList.add("cell");
-        mapElement.appendChild(cell);
-        if (map[i][j] == 1) {
-            cell.style.backgroundImage = 'url(./img/muro.png)';
-        }
-    }
-    mapElement.appendChild(document.createElement("br"));
-}
-
 function recorrerMapa() {
     var count = 0;
     for (let i = 0; i < map.length; i++) {
         for (let j = 0; j < map[i].length; j++) {
+            const celdaNum = document.getElementsByClassName("cell");
+            if (map[i][j] == 1) {
+                celdaNum[count].style.backgroundImage = 'url(./img/muro.png)';
+            }
             if (map[i][j] == 5) {
                 if (Jugador.X == 0 && Jugador.Y == 0) {
-                    Jugador.Y = i;
-                    Jugador.X = j;
-                    Jugador.posInicialX = Jugador.X;
-                    Jugador.posInicialY = Jugador.Y;
+                    Jugador.posInicialY = i;
+                    Jugador.posInicialX = j;
                 }
                 Jugador.Y = i;
                 Jugador.X = j;
-                const celdaNum = document.getElementsByClassName("cell");
                 if (Jugador.direccion == 'w') {
                     celdaNum[count].style.backgroundImage = 'url(./img/pjEspalda.png)';
                     celdaNum[count].style.transform = 'rotateY(0deg)';
@@ -119,10 +104,8 @@ function recorrerMapa() {
                 celdaNum[count].style.backgroundImage = 'url(./img/llave.png)';
             } else if (map[i][j] == 4) {
                 if (Ogro.X == 0 && Ogro.Y == 0) {
-                    Ogro.Y = i;
-                    Ogro.X = j;
-                    Ogro.posInicialX = Ogro.X;
-                    Ogro.posInicialY = Ogro.Y;
+                    Ogro.posInicialY = i;
+                    Ogro.posInicialX = j;
                 }
                 Ogro.Y = i;
                 Ogro.X = j;
@@ -133,18 +116,14 @@ function recorrerMapa() {
                 celdaNum[count].style.backgroundImage = 'url(./img/curar.png)';
             } else if (map[i][j] == 8) {
                 if (Demonio.X == 0 && Demonio.Y == 0) {
-                    Demonio.Y = i;
-                    Demonio.X = j;
-                    Demonio.posInicialX = Demonio.X;
-                    Demonio.posInicialY = Demonio.Y;
+                    Demonio.posInicialY = i;
+                    Demonio.posInicialX = j;
                 }
                 Demonio.Y = i;
                 Demonio.X = j;
                 const celdaNum = document.getElementsByClassName("cell");
                 celdaNum[count].style.backgroundImage = 'url(./img/demonio.png)';
             } else if (map[i][j] == 9) {
-                Escaleras.Y = i;
-                Escaleras.X = j;
                 const celdaNum = document.getElementsByClassName("cell");
                 if (Jugador.tieneLlave == true) {
                     celdaNum[count].style.backgroundImage = 'url(./img/escAbierta.png)';
@@ -199,11 +178,12 @@ function moverCelda(oper, next1, next2) {
                 llave.style.display = "block";
                 Jugador.tieneLlave = true;
             } else if (map[Jugador.Y + next1][Jugador.X + next2] == 6) {
+                Jugador.vidas += 1;
                 añadirVida();
             } if (map[Jugador.Y + next1][Jugador.X + next2] == 9) {
                 if (Jugador.tieneLlave == true) {
-                    nivel2();
                     Escaleras.nivel += 1;
+                    cambioNivel();
                     tituloNivel.innerHTML = `Mazmorra Level ${Escaleras.nivel}`;
                 }
             } else {
@@ -221,12 +201,13 @@ function moverCelda(oper, next1, next2) {
                 llave.style.display = "block";
                 Jugador.tieneLlave = true;
             } else if (map[Jugador.Y - next1][Jugador.X - next2] == 6) {
+                Jugador.vidas += 1;
                 añadirVida();
             }
             if (map[Jugador.Y - next1][Jugador.X - next2] == 9) {
                 if (Jugador.tieneLlave == true) {
-                    nivel2();
                     Escaleras.nivel += 1;
+                    cambioNivel();
                     tituloNivel.innerHTML = `Mazmorra Level ${Escaleras.nivel}`;
                 }
             } else {
@@ -376,8 +357,16 @@ function añadirVida() {
 }
 
 function eliminarVida() {
-    const removeVida = document.querySelector('.imgVida');
-    removeVida.remove();
+    if (Jugador.vidas > 1) {
+        Jugador.vidas -= 1;
+        const removeVida = document.querySelector('.imgVida');
+        removeVida.remove();
+    } else {
+        Jugador.vidas -= 1;
+        const removeVida = document.querySelector('.imgVida');
+        removeVida.remove();
+        contenidoDerrota.style.display = 'flex';
+    }
 }
 
 function reinicioVida(enemigo) {
@@ -388,50 +377,97 @@ function reinicioVida(enemigo) {
         Jugador.Y = Jugador.posInicialY;
         map[Jugador.Y][Jugador.X] = 5;
 
-        if (Ogro.X != 0 && Ogro.Y != 0) {
-            map[Ogro.Y][Ogro.X] = 0;
-            Ogro.X = Ogro.posInicialX;
-            Ogro.Y = Ogro.posInicialY;
-            Ogro.direccion = 'w';
-            map[Ogro.Y][Ogro.X] = 4;
-        }
-
-        if (Demonio.X != 0 && Demonio.Y != 0) {
-            map[Demonio.Y][Demonio.X] = 0;
-            Demonio.X = Demonio.posInicialX;
-            Demonio.Y = Demonio.posInicialY;
-            Demonio.direccion = 'w';
-            map[Demonio.Y][Demonio.X] = 8;
-        }
+        reiniciarEnemigo(Ogro, 4);
+        reiniciarEnemigo(Demonio, 8);
         eliminarVida();
     }
 }
 
-function nivel2() {
-    const map2 = [
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 3, 1, 0, 0, 0, 0, 1, 0, 2, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 8, 1, 1, 0, 2, 1],
-        [1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1],
-        [1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1],
-        [1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 2, 1],
-        [1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1],
-        [1, 0, 0, 0, 0, 2, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1],
-        [1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 9, 0, 1],
-        [1, 1, 2, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1],
-        [1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1],
-        [1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 2, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1],
-        [1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 2, 1, 2, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1],
-        [1, 0, 0, 0, 0, 1, 0, 2, 1, 0, 4, 1, 2, 2, 2, 1, 0, 0, 0, 0, 1, 2, 1, 1, 1, 2, 0, 1, 1, 6, 1],
-        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    ];
+function reiniciarEnemigo(enemigo, numEnemigo) {
+    if (enemigo.X != 0 && enemigo.Y != 0) {
+        map[enemigo.Y][enemigo.X] = 0;
+        enemigo.X = enemigo.posInicialX;
+        enemigo.Y = enemigo.posInicialY;
+        enemigo.direccion = 'w';
+        map[enemigo.Y][enemigo.X] = numEnemigo;
+    }
+}
+
+function cambioNivel() {
+    Jugador.tieneLlave = false;
     Jugador.direccion = 'Pausa';
+    llave.style.display = "none";
     Ogro.Y = 0;
     Ogro.X = 0;
     Ogro.direccion = 'w';
     Demonio.Y = 0;
     Demonio.X = 0;
     Demonio.direccion = 'w';
-    map = map2;
+    mapasNiveles();
     recorrerMapa();
+}
+
+function mapasNiveles() {
+    if (Escaleras.nivel == 1) {
+        // 0 camino, 1 pared, 2 moneda, 3 llave, 4 Ogro, 5 pj, 6 curacion, 8 demonio, 9 escalera
+        // ColumnaFila[y]RecorreFila[x]
+        var map1 = [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 3, 1, 1, 1, 0, 1, 1, 2, 1, 0, 0, 0, 0, 0, 0, 2, 1, 2, 1, 1, 0, 0, 0, 2, 1, 1, 1],
+            [1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1],
+            [1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 1],
+            [1, 1, 1, 2, 0, 1, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 4, 0, 1, 1, 1],
+            [1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9, 0, 1, 1, 1],
+            [1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1],
+            [1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
+            [1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1],
+            [1, 1, 1, 2, 1, 1, 1, 1, 0, 0, 1, 2, 0, 1, 0, 0, 1, 2, 1, 1, 2, 0, 0, 0, 1, 1, 0, 2, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        ];
+        map = map1;
+    } else if (Escaleras.nivel == 2) {
+        var map2 = [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 2, 1, 1, 1, 4, 3, 1, 1],
+            [1, 1, 2, 0, 1, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 2, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1],
+            [1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 1, 1],
+            [1, 1, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 1],
+            [1, 1, 0, 1, 2, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+            [1, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1],
+            [1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 2, 1, 1],
+            [1, 1, 0, 0, 8, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1],
+            [1, 1, 0, 9, 0, 1, 1, 1, 1, 0, 1, 2, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1],
+            [1, 1, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 1, 2, 1, 1, 0, 0, 0, 1, 0, 2, 1, 0, 0, 0, 1, 2, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        ];
+        map = map2;
+    } else if (Escaleras.nivel == 3) {
+        var map3 = [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 3, 1, 0, 0, 0, 2, 1, 0, 2, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 8, 1, 1, 0, 2, 1],
+            [1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 2, 1],
+            [1, 0, 0, 0, 0, 1, 1, 2, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 2, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1],
+            [1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 2, 1],
+            [1, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 2, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1],
+            [1, 1, 1, 0, 0, 2, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+            [1, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 9, 0, 1],
+            [1, 1, 2, 1, 1, 0, 0, 2, 0, 1, 0, 2, 0, 1, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 1],
+            [1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1],
+            [1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1],
+            [1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 2, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 2, 1, 1, 0, 0, 0, 0, 1],
+            [1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 2, 1, 2, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1],
+            [1, 1, 0, 0, 0, 1, 0, 2, 1, 0, 4, 1, 2, 2, 2, 1, 0, 0, 0, 0, 1, 2, 1, 1, 1, 2, 0, 1, 1, 6, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        ];
+        map = map3;
+    } else {
+        console.log("Has ganado");
+    }
 }

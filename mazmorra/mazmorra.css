@@ -40,7 +40,7 @@ main {
     display: inline-block;
     background-size: cover;
     background-repeat: no-repeat;
-    margin-top: -4px;
+    margin-top: -3px;
     background-color: var(--bgMazmorra);
 }
 
@@ -121,4 +121,31 @@ main {
     background-size: cover;
     width: 30px;
     height: 30px;
+}
+
+/* BOTONES */
+
+#contenidoDerrota {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 930px;
+    height: 430px;
+    position: absolute;
+    z-index: 99;
+}
+
+#refresh {
+    background-image: url(./img/botones/reiniciar.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 150px;
+    width: 400px;
+    cursor: pointer;
+    position: absolute;
+    transition: 0.2s;
+}
+
+#refresh:hover {
+    filter: brightness(1.2);
 }
