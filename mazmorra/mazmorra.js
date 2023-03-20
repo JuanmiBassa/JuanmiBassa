@@ -110,7 +110,11 @@ function recorrerMapa() {
                 Ogro.Y = i;
                 Ogro.X = j;
                 const celdaNum = document.getElementsByClassName("cell");
-                celdaNum[count].style.backgroundImage = 'url(./img/ogro.png)';
+                if (Ogro.direccion == 'w') {
+                    celdaNum[count].style.backgroundImage = 'url(./img/ogroEspalda.png)';
+                } else {
+                    celdaNum[count].style.backgroundImage = 'url(./img/ogro.png)';
+                }
             } else if (map[i][j] == 6) {
                 const celdaNum = document.getElementsByClassName("cell");
                 celdaNum[count].style.backgroundImage = 'url(./img/curar.png)';

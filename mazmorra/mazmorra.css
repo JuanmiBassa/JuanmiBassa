@@ -34,6 +34,17 @@ main {
     flex-direction: column;
 }
 
+#marco {
+    background-image: url(./img/botones/marco.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    width: 950px;
+    height: 470px;
+    margin-top: -10px;
+    margin-left: -10px
+}
+
 .cell {
     width: 30px;
     height: 30px;
@@ -130,7 +141,7 @@ main {
     justify-content: center;
     align-items: center;
     width: 930px;
-    height: 430px;
+    height: 440px;
     position: absolute;
     z-index: 99;
 }
@@ -139,8 +150,8 @@ main {
     background-image: url(./img/botones/reiniciar.png);
     background-repeat: no-repeat;
     background-size: cover;
-    height: 150px;
-    width: 400px;
+    height: 80px;
+    width: 200px;
     cursor: pointer;
     position: absolute;
     transition: 0.2s;
